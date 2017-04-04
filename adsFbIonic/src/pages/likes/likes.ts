@@ -1,25 +1,40 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-import {FacebookService, FacebookLoginResponse} from 'ng2-facebook-sdk/dist';
+import {FacebookService} from 'ng2-facebook-sdk/dist';
 import { LoadingController } from 'ionic-angular';
+import { DataService } from '../../providers/data/data.service';
 
 @Component({
   selector: 'page-likes',
   templateUrl: 'likes.html',
-  providers: [ FacebookService ]
+  providers: [ FacebookService ,DataService ]
 })
-export class LikesPage {
-	sampleRes = "";
-  constructor(public navCtrl: NavController,private fb: FacebookService,public loadingCtrl: LoadingController) {
+export class LikesPage implements OnInit{
 
+  constructor(public navCtrl: NavController,private fb: FacebookService,public loadingCtrl: LoadingController,public _data : DataService) {
+    console.log('onInit');
+    // list bot to like
+    this._data.db.child('users').on('value', data => {
+         this.usersBotList = data.val();
+     });
+    // list bot to commebt
+    this._data.db.child('usercomment').on('value', data => {
+         this.usersCommentBotList = data.val();
+     });
   }
+
+  sampleRes = "";
+  usersBotList = [];
+  usersCommentBotList = [];
   currentId = "";
   postsById = "";
-  url = '/10202967337398238_10210107860906863?fields=id,message,created_time,story,from,comments.summary(true),likes.summary(true)&access_token=EAAAAUaZA8jlABAAfVM4REYR73Q6fs9C5BG5cJZAoVbjWY3lr9cy15L4jNBFiYzqYzmdal5CblOOaw90cGYpFTbe3Gbhu0YxMsVy6d6vc1z1sZA3OD2uyqktwrcJqS8LS2QVYu79GTnslH3teWw7THetrWaK5HJkMOwPcFoqAQrOymaKAwyu&limit=30';
   envAvai = false;
   postList = "";
-  pictureList = "";
+
+  ngOnInit() {
+    
+  }
   searchFacebookByID(event) : void{
   	this.currentId = event.target.value;
   	this.envAvai = false;
