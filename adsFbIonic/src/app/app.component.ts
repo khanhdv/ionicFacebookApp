@@ -19,10 +19,10 @@ export class MyApp {
       Splashscreen.hide();
     });
     let fbParams: FacebookInitParams = {
-                                   appId: '562383860628503',
-                                   xfbml: true,
-                                   version: 'v2.6'
-                                   };
+       appId: '562383860628503',
+       xfbml: true,
+       version: 'v1.0'
+       };
     this.fb.init(fbParams);
   }
 }
