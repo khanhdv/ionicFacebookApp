@@ -6,7 +6,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LikesPage } from '../pages/likes/likes';
-
+import { ModalContentPage } from '../pages/likes/modal-page';
 @NgModule({
   declarations: [
     MyApp,
@@ -14,7 +14,8 @@ import { LikesPage } from '../pages/likes/likes';
     ContactPage,
     HomePage,
     LikesPage,
-    TabsPage
+    TabsPage,
+    ModalContentPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -26,7 +27,8 @@ import { LikesPage } from '../pages/likes/likes';
     ContactPage,
     HomePage,
     LikesPage,
-    TabsPage
+    TabsPage,
+    ModalContentPage
   ],
   providers: []
 })

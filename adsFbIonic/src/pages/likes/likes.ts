@@ -4,6 +4,8 @@ import { NavController } from 'ionic-angular';
 import {FacebookService} from 'ng2-facebook-sdk/dist';
 import { LoadingController } from 'ionic-angular';
 import { DataService } from '../../providers/data/data.service';
+import { ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
+import { ModalContentPage } from './modal-page';
 
 @Component({
   selector: 'page-likes',
@@ -12,7 +14,7 @@ import { DataService } from '../../providers/data/data.service';
 })
 export class LikesPage implements OnInit{
 
-  constructor(public navCtrl: NavController,private fb: FacebookService,public loadingCtrl: LoadingController,public _data : DataService) {
+  constructor(public navCtrl: NavController,private fb: FacebookService,public loadingCtrl: LoadingController,public _data : DataService,public modalCtrl: ModalController) {
     console.log('onInit');
     // list bot to like
     this._data.db.child('users').on('value', data => {
@@ -52,7 +54,6 @@ export class LikesPage implements OnInit{
       (response) => {
         let body = JSON.stringify(response);
         this.postsById = body;
-        console.log(response);
         loader.dismissAll();
         this.envAvai = true;
         this.handlerSearchResponse(response.data);
@@ -65,9 +66,15 @@ export class LikesPage implements OnInit{
     );
 
   }
-
+  openLikeModal(post) {
+    console.log(post);
+    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList});
+    modal.present();
+  }
   handlerSearchResponse(jsonData): void{
       this.postList = jsonData;
-
+      console.log(this.postList);
   }
 }
+
+

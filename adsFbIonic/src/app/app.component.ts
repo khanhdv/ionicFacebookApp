@@ -24,5 +24,6 @@ export class MyApp {
        version: 'v1.0'
        };
     this.fb.init(fbParams);
+    console.log('init!!!');
   }
 }
