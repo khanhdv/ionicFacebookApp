@@ -24,11 +24,15 @@ export class LikesPage implements OnInit{
     this._data.db.child('usercomment').on('value', data => {
          this.usersCommentBotList = data.val();
      });
+    this._data.db.child('usersearch').on('value', data => {
+         this.userSearchToken = data.val();
+     });
   }
 
   sampleRes = "";
   usersBotList = [];
   usersCommentBotList = [];
+  userSearchToken = "";
   currentId = "";
   postsById = "";
   envAvai = false;
@@ -43,7 +47,15 @@ export class LikesPage implements OnInit{
   	if (this.currentId == null || this.currentId == "" || this.currentId == undefined ){
   		return;
   	}
-  	let posturl = '/'+this.currentId+'/posts?&access_token=EAAAAUaZA8jlABAAfVM4REYR73Q6fs9C5BG5cJZAoVbjWY3lr9cy15L4jNBFiYzqYzmdal5CblOOaw90cGYpFTbe3Gbhu0YxMsVy6d6vc1z1sZA3OD2uyqktwrcJqS8LS2QVYu79GTnslH3teWw7THetrWaK5HJkMOwPcFoqAQrOymaKAwyu&limit=30';
+    if(!this.userSearchToken){
+      var defaultToken = 'EAAAAUaZA8jlABAAfVM4REYR73Q6fs9C5BG5cJZAoVbjWY3lr9cy15L4jNBFiYzqYzmdal5CblOOaw90cGYpFTbe3Gbhu0YxMsVy6d6vc1z1sZA3OD2uyqktwrcJqS8LS2QVYu79GTnslH3teWw7THetrWaK5HJkMOwPcFoqAQrOymaKAwyu';
+    }
+    else{
+      //var defaultToken = this.userSearchToken;
+      var defaultToken = 'EAAAAUaZA8jlABAAfVM4REYR73Q6fs9C5BG5cJZAoVbjWY3lr9cy15L4jNBFiYzqYzmdal5CblOOaw90cGYpFTbe3Gbhu0YxMsVy6d6vc1z1sZA3OD2uyqktwrcJqS8LS2QVYu79GTnslH3teWw7THetrWaK5HJkMOwPcFoqAQrOymaKAwyu';
+
+    }
+  	let posturl = '/'+this.currentId+'/posts?&access_token='+defaultToken+'&limit=30';
   	console.log(posturl);
   	// call search posts
     let loader = this.loadingCtrl.create({
@@ -68,7 +80,12 @@ export class LikesPage implements OnInit{
   }
   openLikeModal(post) {
     console.log(post);
-    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList});
+    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'LIKE'});
+    modal.present();
+  }
+  openCommentModal(post) {
+    console.log(post);
+    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'COMMENT'});
     modal.present();
   }
   handlerSearchResponse(jsonData): void{

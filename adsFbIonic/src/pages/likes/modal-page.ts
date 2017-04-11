@@ -9,17 +9,32 @@ export class ModalContentPage {
   post;
   likeqty = 0;
   likebot : any;
+  commentbot : any;
+  type : any;
+  botName : any;
+  listBotCommentToken =[];
+  commentContent = '';
   constructor(
     public platform: Platform,
     public params: NavParams,
     public viewCtrl: ViewController,
     private fb: FacebookService,
   ) {
-   console.log('Post content', params.get('post'));
    this.post = params.get('post');
    this.likebot = params.get('likebot');
+   this.commentbot = params.get('commentbot');
+   this.type = params.get('type');
+   this.getListBooCommentTokenAndName(this.commentbot);
   }
-
+  getListBooCommentTokenAndName(data){
+    for (var key in data){
+      this.listBotCommentToken.push({
+        'token' : data[key].access_token.split(";")[1],
+        'name' : data[key].access_token.split(";")[0]
+      })
+    }
+    console.log(this.listBotCommentToken);
+  }
   dismiss() {
     this.viewCtrl.dismiss();
   }
@@ -29,8 +44,6 @@ export class ModalContentPage {
     if(likeqty > 100 || likeqty < 0){
       this.likeqty = 1;
     }
-    console.log('like num ' + this.likeqty);
-    console.log(this.likebot);
     var listRandomToken = [];
     var listToken = [];
     for(var key in this.likebot){
@@ -64,4 +77,37 @@ export class ModalContentPage {
       ); 
     }
   }
+
+  onChange(value){
+  }
+  submitComment(botName){
+     console.log('submitComment');
+     console.log(botName);
+     console.log(this.commentContent);
+
+    for(var key in botName){
+      var params = {
+        access_token : botName[key],
+        method : 'post',
+        message : this.commentContent,
+      }
+      if(this.post.object_id)
+        var posturl = '/'+this.post.object_id+'/comments?message='+this.commentContent+'&access_token='+botName[key];
+      else if(this.post.id)
+        var posturl = '/'+this.post.id+'/comments?message='+this.commentContent+'&access_token='+botName[key];
+      console.log(posturl);
+      this.fb.api(posturl,'post',params).then(
+        (response) => {
+          console.log(response);
+          alert(response);
+        },
+        (error: any) => {
+          alert(error);
+          console.error(error);
+        }
+      ); 
+    }
+     this.botName = [];
+  }
+
 }

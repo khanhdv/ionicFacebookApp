@@ -32,7 +32,7 @@
       </button>
     </ion-col>
     <ion-col>
-      <button primary clear small>
+      <button primary clear small (click)="openCommentModal(post)">
         <ion-icon name="text"></ion-icon>
         <div *ngIf="post.comments">{{post.comments.count}} Comments</div>
       </button>

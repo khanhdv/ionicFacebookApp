@@ -47,14 +47,32 @@
       </ion-note>
     </ion-col>
   </ion-row>
-<ion-item>
+<ion-item *ngIf="type == 'LIKE'">
     <ion-input type="number" placeholder="Number Likes you wanna" [value]="likeqty" [(ngModel)]="likeqty"></ion-input>
 </ion-item>
-<button ion-button round (click)="submitLikes(likeqty)">LIKES</button>
+<div *ngIf="type == 'LIKE'">
+  <button ion-button round (click)="submitLikes(likeqty)">LIKES</button>
+  <button ion-button round (click)="dismiss()">CANCEL</button>
+</div>
+
+<ion-item *ngIf="type == 'COMMENT'">
+  <ion-label>BOT name</ion-label>
+  <ion-select [(ngModel)]="botName" multiple="true" (change)="onChange(value)">
+    <ion-option *ngFor="let data of listBotCommentToken" [value]="data.token">{{data.name}}</ion-option>
+  </ion-select>
+</ion-item>
+<div *ngIf="type == 'COMMENT'">
+  <ion-textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content"></ion-textarea>
+  <button ion-button round (click)="submitComment(botName)">COMMENT!</button>
+  <button ion-button round (click)="dismiss()">CANCEL</button>
+</div>
 </ion-card>
 </ion-content>
 <style>
   .social-cards ion-col {
     padding: 0;
+  }
+  .text-input {
+    border: 1px solid grey;
   }
 </style>
