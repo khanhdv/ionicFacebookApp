@@ -37,11 +37,13 @@ export class LikesPage implements OnInit{
   postsById = "";
   envAvai = false;
   postList = "";
-
+  shouldShowCancel : true;
+  cordova: any;
   ngOnInit() {
     
   }
   searchFacebookByID(event) : void{
+    event.preventDefault();
   	this.currentId = event.target.value;
   	this.envAvai = false;
   	if (this.currentId == null || this.currentId == "" || this.currentId == undefined ){
@@ -90,7 +92,9 @@ export class LikesPage implements OnInit{
   }
   handlerSearchResponse(jsonData): void{
       this.postList = jsonData;
-      console.log(this.postList);
+  }
+  closeKeyboard(){
+    this.cordova.plugins.Keyboard.close();
   }
 }
 

@@ -2,12 +2,11 @@
   <ion-navbar>
     <ion-title>Likes/Comments</ion-title>
   </ion-navbar>
-    <h6>Nhập facebook ID</h6>
-  <ion-searchbar [(ngModel)]="currentId" placeholder="Facebook ID" (search)="searchFacebookByID($event)">
+  <ion-searchbar [(ngModel)]="currentId" placeholder="Facebook ID" (search)="searchFacebookByID($event)" [showCancelButton]="shouldShowCancel">
 </ion-searchbar>
 </ion-header>
 
-<ion-content padding has-header components-demo cards-bg social-cards>
+<ion-content padding has-header components-demo cards-bg social-cards  (click)="closeKeyboard()">
 <ion-card *ngFor="let post of postList" [hidden] = "!envAvai">
   <ion-item>
     <ion-avatar item-left>

@@ -10,7 +10,7 @@
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />ys
+    <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
@@ -32,4 +32,5 @@
         <variable name="APP_ID" value="562383860628503" />
         <variable name="APP_NAME" value="adssupporttools" />
     </plugin>
+    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
 </widget>
