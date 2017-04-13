@@ -62,7 +62,7 @@
   </ion-select>
 </ion-item>
 <div *ngIf="type == 'COMMENT'">
-  <ion-textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content"></ion-textarea>
+  <textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content" style="height: 100%;width: 100%;"></textarea>
   <button ion-button round (click)="submitComment(botName)">COMMENT!</button>
   <button ion-button round (click)="dismiss()">CANCEL</button>
 </div>
@@ -74,5 +74,13 @@
   }
   .text-input {
     border: 1px solid grey;
+  }
+  input, textarea {
+      -webkit-user-select: auto !important;
+      -khtml-user-select: auto !important;
+      -moz-user-select: auto !important;
+      -ms-user-select: auto !important;
+      -o-user-select: auto !important;
+      user-select: auto !important;  
   }
 </style>
