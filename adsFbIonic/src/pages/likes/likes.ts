@@ -78,22 +78,24 @@ export class LikesPage implements OnInit{
       (error: any) => {
         console.error(error);
         loader.dismissAll();
-        this.envAvai = false;}
+        this.envAvai = false;
+      }
     );
 
   }
   openLikeModal(post) {
     console.log(post);
-    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'LIKE'});
+    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'LIKE' , 'id' : this.currentId});
     modal.present();
   }
   openCommentModal(post) {
     console.log(post);
-    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'COMMENT'});
+    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'COMMENT', 'id' : this.currentId});
     modal.present();
   }
   handlerSearchResponse(jsonData): void{
       this.postList = jsonData;
+      console.log(this.postList);
   }
   closeKeyboard(){
     this.cordova.plugins.Keyboard.close();
