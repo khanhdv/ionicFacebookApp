@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-
+import { Device } from 'ionic-native';
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
 })
 export class ContactPage {
-
+	myUUID : any;
   constructor(public navCtrl: NavController) {
-
+  	console.log(Device.uuid);
+  	this.myUUID = Device.uuid;
   }
   // go to facebook page
   goToFacebookPage() : void {

@@ -49,15 +49,13 @@ export class LikesPage implements OnInit{
   	if (this.currentId == null || this.currentId == "" || this.currentId == undefined ){
   		return;
   	}
-    var searchTokenList = this.userSearchToken.split(';');
-    var tokenValue = searchTokenList[Math.floor(Math.random()*searchTokenList.length)];
     if(!this.userSearchToken){
       var defaultToken = 'EAAAAUaZA8jlABAAfVM4REYR73Q6fs9C5BG5cJZAoVbjWY3lr9cy15L4jNBFiYzqYzmdal5CblOOaw90cGYpFTbe3Gbhu0YxMsVy6d6vc1z1sZA3OD2uyqktwrcJqS8LS2QVYu79GTnslH3teWw7THetrWaK5HJkMOwPcFoqAQrOymaKAwyu';
     }
     else{
       //var defaultToken = this.userSearchToken;
-      //var defaultToken = 'EAAAAUaZA8jlABAAfVM4REYR73Q6fs9C5BG5cJZAoVbjWY3lr9cy15L4jNBFiYzqYzmdal5CblOOaw90cGYpFTbe3Gbhu0YxMsVy6d6vc1z1sZA3OD2uyqktwrcJqS8LS2QVYu79GTnslH3teWw7THetrWaK5HJkMOwPcFoqAQrOymaKAwyu';
-      var defaultToken = tokenValue;
+      var defaultToken = 'EAAAAUaZA8jlABAAfVM4REYR73Q6fs9C5BG5cJZAoVbjWY3lr9cy15L4jNBFiYzqYzmdal5CblOOaw90cGYpFTbe3Gbhu0YxMsVy6d6vc1z1sZA3OD2uyqktwrcJqS8LS2QVYu79GTnslH3teWw7THetrWaK5HJkMOwPcFoqAQrOymaKAwyu';
+
     }
   	let posturl = '/'+this.currentId+'/posts?&access_token='+defaultToken+'&limit=30';
   	console.log(posturl);
@@ -78,24 +76,22 @@ export class LikesPage implements OnInit{
       (error: any) => {
         console.error(error);
         loader.dismissAll();
-        this.envAvai = false;
-      }
+        this.envAvai = false;}
     );
 
   }
   openLikeModal(post) {
     console.log(post);
-    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'LIKE' , 'id' : this.currentId});
+    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'LIKE'});
     modal.present();
   }
   openCommentModal(post) {
     console.log(post);
-    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'COMMENT', 'id' : this.currentId});
+    let modal = this.modalCtrl.create(ModalContentPage, {'post' : post,'likebot' : this.usersBotList,'commentbot' : this.usersCommentBotList,'type' : 'COMMENT'});
     modal.present();
   }
   handlerSearchResponse(jsonData): void{
       this.postList = jsonData;
-      console.log(this.postList);
   }
   closeKeyboard(){
     this.cordova.plugins.Keyboard.close();

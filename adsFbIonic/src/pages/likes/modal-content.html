@@ -16,15 +16,13 @@
 <ion-card>
   <ion-item>
     <ion-avatar item-left>
-      <!-- <img src="//graph.facebook.com/{{id}}/picture"> -->
-      <img src="https://graph.facebook.com/{{id}}/picture">
+      <img src="{{post.icon}}">
     </ion-avatar>
     <h2>{{post.from.name}}</h2>
     <p>{{post.create_time}}</p>
   </ion-item>
 
-  <img src="{{post.picture}}" *ngIf="post.type != 'photo'">
-  <img src="https://graph.facebook.com/{{post.object_id}}/picture" *ngIf="post.type == 'photo'">
+  <img src="{{post.picture}}">
   <ion-card-content>
     <p *ngIf="post.story">{{post.story}}.</p>
     <p *ngIf="post.message">{{post.message}}.</p>
@@ -45,55 +43,36 @@
     </ion-col>
     <ion-col center text-center>
       <ion-note>
-       <!--  {{post.created_time | date:"dd/MM/yy"}} -->
-        {{post.created_time | slice:0:10}}
+        11h ago
       </ion-note>
     </ion-col>
   </ion-row>
-</ion-card>
 <ion-item *ngIf="type == 'LIKE'">
-    <ion-label color="primary" stacked>Number of likes to boost this post</ion-label>
     <ion-input type="number" placeholder="Number Likes you wanna" [value]="likeqty" [(ngModel)]="likeqty"></ion-input>
 </ion-item>
 <div *ngIf="type == 'LIKE'">
-  <div>
-  <button ion-button round (click)="submitLikes(likeqty)" style="width: 100%;">LIKES</button>
-  <button ion-button round (click)="dismiss()" style="width: 100%;">CANCEL</button>
-  </div>
+  <button ion-button round (click)="submitLikes(likeqty)">LIKES</button>
+  <button ion-button round (click)="dismiss()">CANCEL</button>
 </div>
 
 <ion-item *ngIf="type == 'COMMENT'">
   <ion-label>BOT name</ion-label>
   <ion-select [(ngModel)]="botName" multiple="true" (change)="onChange(value)">
-    <ion-option *ngFor="let data of listBotCommentToken" [value]="data.token">
-    <p>{{data.name}}<p>
-    </ion-option>
+    <ion-option *ngFor="let data of listBotCommentToken" [value]="data.token">{{data.name}}</ion-option>
   </ion-select>
 </ion-item>
 <div *ngIf="type == 'COMMENT'">
-  <textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content" style="height: 100%;width: 100%;"></textarea>
-  <div>
-  <button ion-button round (click)="submitComment(botName)" style="width: 100%">COMMENT!</button>
-  <button ion-button round (click)="dismiss()" style="width: 100%;">CANCEL</button>
-  </div>
+  <ion-textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content"></ion-textarea>
+  <button ion-button round (click)="submitComment(botName)">COMMENT!</button>
+  <button ion-button round (click)="dismiss()">CANCEL</button>
 </div>
-
+</ion-card>
 </ion-content>
 <style>
   .social-cards ion-col {
     padding: 0;
   }
-
-  textarea {
-    min-height: 150px;
-  }
-  input, textarea {
-      -webkit-user-select: auto !important;
-      -khtml-user-select: auto !important;
-      -moz-user-select: auto !important;
-      -ms-user-select: auto !important;
-      -o-user-select: auto !important;
-      user-select: auto !important;  
+  .text-input {
+    border: 1px solid grey;
   }
 </style>
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>

@@ -10,15 +10,13 @@
 <ion-card *ngFor="let post of postList" [hidden] = "!envAvai">
   <ion-item>
     <ion-avatar item-left>
-      <!-- <img src="//graph.facebook.com/{{currentId}}/picture"> -->
-      <img src="https://graph.facebook.com/{{currentId}}/picture">
+      <img src="{{post.icon}}">
     </ion-avatar>
     <h2>{{post.from.name}}</h2>
     <p>{{post.create_time}}</p>
   </ion-item>
 
-  <img src="{{post.picture}}" *ngIf="post.type != 'photo'">
-  <img src="https://graph.facebook.com/{{post.object_id}}/picture" *ngIf="post.type == 'photo'">
+  <img src="{{post.picture}}">
 
   <ion-card-content>
     <p *ngIf="post.story">{{post.story}}.</p>
@@ -40,8 +38,7 @@
     </ion-col>
     <ion-col center text-center>
       <ion-note>
-       <!--  {{post.created_time | date:"dd/MM/yy"}} -->
-       {{post.updated_time | slice:0:10}}
+        11h ago
       </ion-note>
     </ion-col>
   </ion-row>
@@ -53,4 +50,3 @@
     padding: 0;
   }
 </style>
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
