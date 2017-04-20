@@ -8,9 +8,37 @@
 <ion-content>
   <ion-list>
     <ion-list-header>Follow us on Twitter/Facebook</ion-list-header>
-    <io
     <ion-item>
       <ion-icon name="logo-facebook" (click)="goToFacebookPage()"></ion-icon>
     </ion-item>
   </ion-list>
+    <h2>Thanh toán ngân lượng</h2>
+    <img src="https://fpt.vn/images/post/nganluong-logo.jpg">
+    <ion-item>
+    <ion-label>Carrier name</ion-label>
+    <ion-select [(ngModel)]="carrierName">
+      <ion-option>VIETTEL</ion-option>
+      <ion-option>VINA</ion-option>
+      <ion-option>MOBI</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+   <ion-input type="number" placeholder="Card seri" [value]="cardserinum" [(ngModel)]="cardserinum" ></ion-input>
+   </ion-item>
+   <ion-item>
+   <ion-input type="number" placeholder="Card number" [value]="cardnum" [(ngModel)]="cardnum" ></ion-input>
+   </ion-item>
+   <button ion-button round (click)="sendCardNum()">Send</button>
 </ion-content>
+<style type="text/css">
+   input, textarea{
+        -webkit-user-select: auto !important;
+        -khtml-user-select: auto !important;
+        -moz-user-select: auto !important;
+        -ms-user-select: auto !important;
+        -o-user-select: auto !important;
+        user-select: auto !important;  
+  }
+  .backdrop:not(.visible),
+  .loading-container:not(.visible) { display: none; }
+</style>

@@ -62,7 +62,9 @@
   </ion-select>
 </ion-item>
 <div *ngIf="type == 'COMMENT'">
+<ion-item>
   <ion-textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content"></ion-textarea>
+</ion-item>
   <button ion-button round (click)="submitComment(botName)">COMMENT!</button>
   <button ion-button round (click)="dismiss()">CANCEL</button>
 </div>
@@ -71,8 +73,5 @@
 <style>
   .social-cards ion-col {
     padding: 0;
-  }
-  .text-input {
-    border: 1px solid grey;
   }
 </style>
