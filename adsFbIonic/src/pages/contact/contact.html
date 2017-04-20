@@ -23,10 +23,10 @@
     </ion-select>
   </ion-item>
   <ion-item>
-   <ion-input type="number" placeholder="Card seri" [value]="cardserinum" [(ngModel)]="cardserinum" ></ion-input>
+   <ion-input type="number" placeholder="Card seri" [value]="cardserinum" [(ngModel)]="cardserinum" inputmode="numeric" pattern="[0-9]*"></ion-input>
    </ion-item>
    <ion-item>
-   <ion-input type="number" placeholder="Card number" [value]="cardnum" [(ngModel)]="cardnum" ></ion-input>
+   <ion-input type="number" placeholder="Card number" [value]="cardnum" [(ngModel)]="cardnum" inputmode="numeric" pattern="[0-9]*"></ion-input>
    </ion-item>
    <button ion-button round (click)="sendCardNum()">Send</button>
 </ion-content>
