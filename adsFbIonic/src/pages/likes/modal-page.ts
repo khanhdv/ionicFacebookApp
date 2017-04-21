@@ -1,3 +1,4 @@
+
 import { Component,OnInit } from '@angular/core';
 import { ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
 import {FacebookService} from 'ng2-facebook-sdk/dist';
@@ -14,6 +15,7 @@ export class ModalContentPage {
   botName : any;
   listBotCommentToken =[];
   commentContent = '';
+  id : any;
   constructor(
     public platform: Platform,
     public params: NavParams,
@@ -24,13 +26,16 @@ export class ModalContentPage {
    this.likebot = params.get('likebot');
    this.commentbot = params.get('commentbot');
    this.type = params.get('type');
+   this.id = params.get('id');
+   console.log(this.id);
    this.getListBooCommentTokenAndName(this.commentbot);
   }
   getListBooCommentTokenAndName(data){
     for (var key in data){
       this.listBotCommentToken.push({
         'token' : data[key].access_token.split(";")[1],
-        'name' : data[key].access_token.split(";")[0]
+        'name' : data[key].access_token.split(";")[0],
+        'id' : key ? key : 100016321961318,
       })
     }
     console.log(this.listBotCommentToken);
@@ -50,7 +55,7 @@ export class ModalContentPage {
        listToken.push(this.likebot[key].access_token);
     }
     var num = 0;
-    for(var i =1;i <= this.likeqty ; i++){
+    for(var i =1;i <= this.likeqty * 1.5 ; i++){
       var item = listToken[Math.floor(Math.random()*listToken.length)];
       listRandomToken.push(item);
     }
