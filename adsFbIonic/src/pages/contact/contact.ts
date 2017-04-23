@@ -14,9 +14,10 @@ export class ContactPage {
 	carrierName: 'VMS';
 	cardserinum : '';
 	cardnum : '';
+  freecode : '';
 	listCarrier : ['VIETTEL','VMS','VNP'];
 	myNumber : '01676128384';
-
+  pet: string = "puppies";
   constructor(public navCtrl: NavController,private http:Http) {
   	console.log(Device.uuid);
   	this.myUUID = Device.uuid;
@@ -48,6 +49,9 @@ export class ContactPage {
     	'client_email' : '1234567',
     	'client_mobile' : this.myUUID,
     }
+
+    // sample success response : 00|47851|vuducthanh2410@gmail.com|9546346133641|57951706623|VIETTEL|3BB5565A-D4B2-4627-BCEA-2AD2C8AC2203|123456|1234567|01676128384|30000|24150|68014073
+    // sample error response : 07|47851|vuducthanh2410@gmail.com|9548181232480|57952002362|VIETTEL|ABC|123456|1234567|123456|||
     var formData = new FormData();
     for(var key in params){
     	formData.append(key,params[key]);
@@ -70,6 +74,9 @@ export class ContactPage {
   sendCardNum(){
   	console.log('send' + this.carrierName + this.cardserinum + this.cardnum);
   	this.testSendCardSeries();
+  }
+  sendFreeCode(){
+    console.log('send free code' + this.freecode);
   }
   onChange(){
   }

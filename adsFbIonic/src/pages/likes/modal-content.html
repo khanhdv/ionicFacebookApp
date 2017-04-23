@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content padding has-header components-demo cards-bg social-cards>
-<ion-card>
+<ion-card class="no-margin no-padding">
   <ion-item>
     <ion-avatar item-left>
       <!-- <img src="//graph.facebook.com/{{id}}/picture"> -->
@@ -95,6 +95,15 @@
       -ms-user-select: auto !important;
       -o-user-select: auto !important;
       user-select: auto !important;  
+  }
+  .no-margin {
+    margin: 0 !important;
+  }
+
+  .no-padding {
+    padding: 0 !important;
+    width: 107%;
+    margin-left: -12px !important;
   }
 </style>
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>

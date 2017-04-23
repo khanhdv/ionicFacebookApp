@@ -6,13 +6,53 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter/Facebook</ion-list-header>
+<!--     <h2>Thanh toán ngân lượng</h2>
+    <img src="https://fpt.vn/images/post/nganluong-logo.jpg">
     <ion-item>
-      <ion-icon name="logo-facebook" (click)="goToFacebookPage()"></ion-icon>
-    </ion-item>
-  </ion-list>
-    <h2>Thanh toán ngân lượng</h2>
+    <ion-label>Carrier name</ion-label>
+    <ion-select [(ngModel)]="carrierName">
+      <ion-option value="VIETTEL">VIETTEL</ion-option>
+      <ion-option value="VNP">VINA</ion-option>
+      <ion-option value="VMS">MOBI</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+   <ion-input type="number" placeholder="Card seri" [value]="cardserinum" [(ngModel)]="cardserinum" inputmode="numeric" pattern="[0-9]*"></ion-input>
+   </ion-item>
+   <ion-item>
+   <ion-input type="number" placeholder="Card number" [value]="cardnum" [(ngModel)]="cardnum" inputmode="numeric" pattern="[0-9]*"></ion-input>
+   </ion-item>
+   <button ion-button round (click)="sendCardNum()">Send</button> -->
+</ion-content>
+
+
+
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-title>
+      Liên hệ thanh toán
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="pet">
+      <ion-segment-button value="puppies">
+        Ngân lượng
+      </ion-segment-button>
+      <ion-segment-button value="kittens">
+        Chuyển khoản
+      </ion-segment-button>
+      <ion-segment-button value="ducklings">
+        nhập code
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="pet">
+    <ion-list *ngSwitchCase="'puppies'">
+    <h2 style="margin-top:50px;">Thanh toán ngân lượng</h2>
     <img src="https://fpt.vn/images/post/nganluong-logo.jpg">
     <ion-item>
     <ion-label>Carrier name</ion-label>
@@ -29,6 +69,19 @@
    <ion-input type="number" placeholder="Card number" [value]="cardnum" [(ngModel)]="cardnum" inputmode="numeric" pattern="[0-9]*"></ion-input>
    </ion-item>
    <button ion-button round (click)="sendCardNum()">Send</button>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'kittens'">
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'ducklings'">
+    <h2 style="margin-top:50px;">Hãy nhập code miễn phí để kéo dài thời hạn sử dụng</h2>
+    <ion-item>
+      <ion-input type="number" placeholder="Code khuyen mai" [value]="freecode" [(ngModel)]="freecode" inputmode="numeric" pattern="[0-9]*"></ion-input>
+    </ion-item>
+     <button ion-button round (click)="sendFreeCode()">Send Code</button>
+    </ion-list>
+  </div>
 </ion-content>
 <style type="text/css">
    input, textarea{
