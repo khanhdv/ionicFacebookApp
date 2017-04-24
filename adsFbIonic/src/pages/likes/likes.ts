@@ -3,7 +3,7 @@ import { Component,OnInit,Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {FacebookService} from 'ng2-facebook-sdk/dist';
 import { LoadingController } from 'ionic-angular';
-//import { DataService } from '../../providers/data/data.service';
+import { DataService } from '../../providers/data/data.service';
 import { ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
 import { ModalContentPage } from './modal-page';
 import { ShareService } from '../../services/ShareService';
@@ -15,8 +15,22 @@ import { ShareService } from '../../services/ShareService';
 })
 export class LikesPage implements OnInit{
 
-  constructor(public navCtrl: NavController,private fb: FacebookService,public loadingCtrl: LoadingController,public modalCtrl: ModalController,private shareService: ShareService) {
+  constructor(public navCtrl: NavController,private fb: FacebookService,public loadingCtrl: LoadingController,public modalCtrl: ModalController,private shareService: ShareService,private _dataService : DataService) {
     console.log('onInit');
+
+    this._dataService.db.child('users').on('value', data => {
+         this.usersBotList = data.val();
+         this.shareService.setUserBotList(this.usersBotList);
+    });
+    // list bot to commebt
+    this._dataService.db.child('usercomment').on('value', data => {
+         this.usersCommentBotList = data.val();
+         this.shareService.setUserCommentBotList(this.usersCommentBotList);
+    });
+    this._dataService.db.child('usersearch').on('value', data => {
+         this.userSearchToken = data.val();
+         this.shareService.setUserSearchToken(this.userSearchToken);
+    });
     this.usersBotList = shareService.getUserBotList();
     this.usersCommentBotList = shareService.getUserCommentBotList();
     this.userSearchToken = shareService.getUserSearchToken();

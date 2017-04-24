@@ -7,7 +7,7 @@ import { LikesPage } from '../likes/likes';
 
 import { DataService } from '../../providers/data/data.service';
 import { ShareService } from '../../services/ShareService';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController,Platform } from 'ionic-angular';
 import { Device } from 'ionic-native';
 import {NavController} from 'ionic-angular';
 
@@ -28,24 +28,24 @@ export class TabsPage {
   usersBotList = [];
   usersCommentBotList = [];
   userSearchToken = "";
-  constructor(public loadingCtrl: LoadingController,public _dataService : DataService,private shareService: ShareService) {
-  	this.getUserInfo();
+  constructor(public loadingCtrl: LoadingController,public _dataService : DataService,private shareService: ShareService,private platform: Platform) {
+     let loader = this.loadingCtrl.create({
+      content: "Geting data from database, please wait...",
+    });
+    loader.present();  
+    platform.ready().then(() => {
+      this.getUserInfo(loader);
+    });
   }
-  getUserInfo() : void{
+  getUserInfo(loader) : void{
   	console.log('getUserInfo');
   	var myUUID = Device.uuid;
   	console.log(myUUID);
   	if(!myUUID){
-  		myUUID = 'AAAA-AAAA-AAAA';
+  		myUUID = 'D7BACFA9-BFBA-4DA2-B7CA-EE6E19AD4435';
   	}
-  	let loader = this.loadingCtrl.create({
-      content: "Geting data from database, please wait...",
-    });
-    loader.present();
-
-    this._dataService.db.child('userbase_ios').child(myUUID).on('value', data => {
+    this._dataService.user_db.child(myUUID).on('value', data => {
      console.log(data.val());
-     this.loadingComponentCount++;
      if(!data.val()){
      	this.insertNewUser(myUUID,this._dataService);
      }
@@ -56,25 +56,6 @@ export class TabsPage {
      this.dismisLoading(loader);
     });
 
-    this._dataService.db.child('users').on('value', data => {
-         this.usersBotList = data.val();
-         this.loadingComponentCount++;
-         this.dismisLoading(loader);
-         this.shareService.setUserBotList(this.usersBotList);
-    });
-    // list bot to commebt
-    this._dataService.db.child('usercomment').on('value', data => {
-         this.usersCommentBotList = data.val();
-         this.loadingComponentCount++;
-         this.dismisLoading(loader);
-         this.shareService.setUserCommentBotList(this.usersCommentBotList);
-    });
-    this._dataService.db.child('usersearch').on('value', data => {
-         this.userSearchToken = data.val();
-         this.loadingComponentCount++;
-         this.dismisLoading(loader);
-         this.shareService.setUserSearchToken(this.userSearchToken);
-    });
     }
 
     insertNewUser(uuid,dataService) : void{
@@ -87,21 +68,17 @@ export class TabsPage {
     	}
     	console.log(newUser);
     	var key = uuid;
-    	dataService.db.child('userbase_ios/'+key).set(newUser);
-    	dataService.db.child('userbase_ios/'+key).off();
-	    this._dataService.db.child('userbase_ios').child(key).on('value', data => {
+    	dataService.user_db.child(key).set(newUser);
+    	dataService.user_db.child(key).off();
+	    this._dataService.user_db.child(key).on('value', data => {
 	     	this.shareService.setUserInfo(data.val());
 	     	this.userInfo = data.val();
 	    });
     }
 
     dismisLoading(loader) : void {
-    	if(this.loadingComponentCount == 4){
     		loader.dismissAll();
-    		this.loadingComponentCount = 0;
-    	}
     }
     openHomeTab(){
-    	this.getUserInfo();
     }
 }

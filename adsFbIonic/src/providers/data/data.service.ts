@@ -5,6 +5,7 @@ import firebase from 'firebase';
 @Injectable()
 export class DataService {
     public db: any;
+    public user_db : any;
     constructor() {
       var config = {
           apiKey: "AIzaSyCe85RpQcJuw_0k1FHci0aqgOG-6m-T4u8",
@@ -16,5 +17,6 @@ export class DataService {
         };
         firebase.initializeApp(config);
         this.db = firebase.database().ref('/');
+        this.user_db = firebase.database().ref('/userbase_ios');
     }
 }
