@@ -10,7 +10,7 @@ import { ModalContentPage } from './modal-page';
 @Component({
   selector: 'page-likes',
   templateUrl: 'likes.html',
-  providers: [ FacebookService ,DataService ]
+  providers: [ FacebookService ]
 })
 export class LikesPage implements OnInit{
 
