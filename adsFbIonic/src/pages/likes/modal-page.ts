@@ -2,6 +2,7 @@
 import { Component,OnInit } from '@angular/core';
 import { ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
 import {FacebookService} from 'ng2-facebook-sdk/dist';
+import { LoadingController } from 'ionic-angular';
 @Component({
   templateUrl: 'modal-content.html',
    providers: [ FacebookService ]
@@ -21,6 +22,7 @@ export class ModalContentPage {
     public params: NavParams,
     public viewCtrl: ViewController,
     private fb: FacebookService,
+    public loadingCtrl: LoadingController
   ) {
    this.post = params.get('post');
    this.likebot = params.get('likebot');
@@ -45,9 +47,9 @@ export class ModalContentPage {
   }
   submitLikes(likeqty){
     this.likeqty = likeqty;
-    var num = 0;
     if(likeqty > 100 || likeqty < 0){
-      this.likeqty = 1;
+      alert('Only limit 100 likes per request!');
+      return;
     }
     var listRandomToken = [];
     var listToken = [];
@@ -55,9 +57,19 @@ export class ModalContentPage {
        listToken.push(this.likebot[key].access_token);
     }
     var num = 0;
-    for(var i =1;i <= this.likeqty * 1.5 ; i++){
+    var sucessnum = 0;
+    var numFail = 0;
+    for(var i =1;i <= this.likeqty ; i++){
       var item = listToken[Math.floor(Math.random()*listToken.length)];
       listRandomToken.push(item);
+    }
+    let loader = this.loadingCtrl.create({
+      content: "Adding likes,please wait...",
+    });
+    var hasProcess = false;
+    //loader.present();
+    if(listRandomToken.length < 1){
+      loader.dismissAll();
     }
 
     for(var key in listRandomToken){
@@ -65,19 +77,42 @@ export class ModalContentPage {
         access_token : listRandomToken[key],
         method : 'post',
       }
-      if(this.post.object_id)
-        var posturl = '/'+this.post.object_id+'/likes';
-      else if(this.post.id)
+      num++;
+
+      if(this.post.id)
         var posturl = '/'+this.post.id+'/likes';
+      else if(this.post.object_id)
+        var posturl = '/'+this.post.object_id+'/likes';
       console.log(posturl);
       this.fb.api(posturl,'post',params).then(
         (response) => {
           console.log(response);
-          alert(response);
+          //alert(response);
+          sucessnum++;
+          if(sucessnum + numFail > listRandomToken.length -1){
+            console.log(sucessnum + numFail);
+            console.log(listRandomToken.length -1);
+            if(!hasProcess){
+              this.processLike(sucessnum);
+              hasProcess = true;
+            }
+            
+            loader.dismissAll();
+          }
         },
 
         (error: any) => {
+          numFail++;
           console.error(error);
+          if(sucessnum + numFail> listRandomToken.length -1){
+            console.log(sucessnum + numFail);
+            console.log(listRandomToken.length -1);
+            if(!hasProcess){
+              this.processLike(sucessnum);
+              hasProcess = true;
+            }
+            loader.dismissAll();
+          }
         }
       ); 
     }
@@ -85,30 +120,60 @@ export class ModalContentPage {
 
   onChange(value){
   }
+  processSuccess(num){
+    console.log('success' + num);
+    alert(num + ' comments added!');
+  }
+  processLike(num){
+    console.log('success' + num);
+    alert(num + ' likes added!');
+  }
   submitComment(botName){
      console.log('submitComment');
      console.log(botName);
      console.log(this.commentContent);
-
+     var numComment = 0;
+     var numFail = 0;
+     var count = 0;
+    let loader = this.loadingCtrl.create({
+      content: "Adding comment,please wait...",
+    });
+    if(botName.length < 1){
+      alert('Please select bot to comment');
+    }
+    else{
+      loader.present();
+    }
     for(var key in botName){
       var params = {
         access_token : botName[key],
         method : 'post',
         message : this.commentContent,
       }
-      if(this.post.object_id)
-        var posturl = '/'+this.post.object_id+'/comments?message='+this.commentContent+'&access_token='+botName[key];
-      else if(this.post.id)
+      count++;
+      if(this.post.id)
         var posturl = '/'+this.post.id+'/comments?message='+this.commentContent+'&access_token='+botName[key];
+      else if(this.post.object_id)
+        var posturl = '/'+this.post.object_id+'/comments?message='+this.commentContent+'&access_token='+botName[key];
       console.log(posturl);
       this.fb.api(posturl,'post',params).then(
         (response) => {
           console.log(response);
-          alert(response);
+          //alert(response);
+          numComment++;
+          if(numComment + numFail > botName.length -1){
+            this.processSuccess(numComment);
+            loader.dismissAll();
+          } 
         },
         (error: any) => {
-          alert(error);
+          //alert(error);
           console.error(error);
+          numFail++;
+          if(numComment + numFail > botName.length -1){
+            this.processSuccess(numComment);
+            loader.dismissAll();
+          } 
         }
       ); 
     }
