@@ -17,12 +17,17 @@ export class LikesPage implements OnInit{
   constructor(public navCtrl: NavController,private fb: FacebookService,public loadingCtrl: LoadingController,public _data : DataService,public modalCtrl: ModalController) {
     console.log('onInit');
     // list bot to like
-    this._data.db.child('users').on('value', data => {
+    let loader = this.loadingCtrl.create({
+      content: "Initialize list bot,Please wait...",
+    });
+    loader.present();
+    this._data.db.child('users_ionic').on('value', data => {
          this.usersBotList = data.val();
      });
     // list bot to commebt
-    this._data.db.child('usercomment').on('value', data => {
+    this._data.db.child('usercomment_ionic').on('value', data => {
          this.usersCommentBotList = data.val();
+         loader.dismissAll();
      });
     this._data.db.child('usersearch').on('value', data => {
          this.userSearchToken = data.val();
