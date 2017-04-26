@@ -22,18 +22,18 @@
 
   <ion-card-content>
     <p *ngIf="post.story">{{post.story}}.</p>
-    <p *ngIf="post.message">{{post.message}}.</p>
+    <p *ngIf="post.message">{{post.message | slice:0:500}}...</p>
   </ion-card-content>
 
   <ion-row>
     <ion-col>
-      <button primary clear small (click)="openLikeModal(post)">
+      <button ion-button primary clear small (click)="openLikeModal(post)">
         <ion-icon name="thumbs-up"></ion-icon>
         <div *ngIf="post.likes">{{post.likes.count}} Likes</div>
       </button>
     </ion-col>
     <ion-col>
-      <button primary clear small (click)="openCommentModal(post)">
+      <button ion-button primary clear small (click)="openCommentModal(post)">
         <ion-icon name="text"></ion-icon>
         <div *ngIf="post.comments">{{post.comments.count}} Comments</div>
       </button>

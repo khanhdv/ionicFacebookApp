@@ -27,18 +27,18 @@
   <img src="https://graph.facebook.com/{{post.object_id}}/picture" *ngIf="post.type == 'photo'">
   <ion-card-content>
     <p *ngIf="post.story">{{post.story}}.</p>
-    <p *ngIf="post.message">{{post.message}}.</p>
+    <p *ngIf="post.message">{{post.message | slice:0:600}}...</p>
   </ion-card-content>
 
   <ion-row>
     <ion-col>
-      <button primary clear small>
+      <button ion-button primary clear small>
         <ion-icon name="thumbs-up"></ion-icon>
         <div *ngIf="post.likes">{{post.likes.count}} Likes</div>
       </button>
     </ion-col>
     <ion-col>
-      <button primary clear small>
+      <button ion-button primary clear small>
         <ion-icon name="text"></ion-icon>
         <div *ngIf="post.comments">{{post.comments.count}} Comments</div>
       </button>
@@ -53,7 +53,10 @@
 </ion-card>
 <ion-item *ngIf="type == 'LIKE'">
     <ion-label color="primary" stacked>Number of likes to boost this post</ion-label>
-    <ion-input type="number" placeholder="Number Likes you wanna" [value]="likeqty" [(ngModel)]="likeqty" inputmode="numeric" pattern="[0-9]*"></ion-input>
+<!--     <ion-input type="number" placeholder="Number Likes you wanna" [value]="likeqty" [(ngModel)]="likeqty" inputmode="numeric" pattern="[0-9]*"></ion-input> -->
+    <ion-select [(ngModel)]="likeqty">
+      <ion-option *ngFor="let item of liketnumlist" [value] = "item.value">{{item.value}}</ion-option>
+    </ion-select>
 </ion-item>
 <div *ngIf="type == 'LIKE'">
   <div>
@@ -106,4 +109,4 @@
     margin-left: -12px !important;
   }
 </style>
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
+<!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script> -->

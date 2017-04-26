@@ -103,7 +103,7 @@ export class LikesPage implements OnInit{
       console.log(this.postList);
   }
   closeKeyboard(){
-    this.cordova.plugins.Keyboard.close();
+    //this.cordova.plugins.Keyboard.close();
   }
 }
 

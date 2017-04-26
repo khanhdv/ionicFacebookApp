@@ -72,11 +72,15 @@ export class ContactPage {
     http2.send(formData);
   }
   sendCardNum(){
-  	console.log('send' + this.carrierName + this.cardserinum + this.cardnum);
-  	this.testSendCardSeries();
+    alert('Bản thử nghiệm chưa hỗ trợ thanh toán');
+    return;
+  	// console.log('send' + this.carrierName + this.cardserinum + this.cardnum);
+  	// this.testSendCardSeries();
   }
   sendFreeCode(){
-    console.log('send free code' + this.freecode);
+    alert('Bản thử nghiệm chưa hỗ trợ thanh toán');
+    return;
+   // console.log('send free code' + this.freecode);
   }
   onChange(){
   }

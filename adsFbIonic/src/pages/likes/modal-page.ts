@@ -17,6 +17,7 @@ export class ModalContentPage {
   listBotCommentToken =[];
   commentContent = '';
   id : any;
+  liketnumlist : any;
   constructor(
     public platform: Platform,
     public params: NavParams,
@@ -30,6 +31,12 @@ export class ModalContentPage {
    this.type = params.get('type');
    this.id = params.get('id');
    console.log(this.id);
+   this.liketnumlist = new Array<string>();
+   for(var i=0;i<20;i++){
+    this.liketnumlist.push({
+      'value' : i+1
+    });
+   }
    this.getListBooCommentTokenAndName(this.commentbot);
   }
   getListBooCommentTokenAndName(data){
@@ -47,6 +54,7 @@ export class ModalContentPage {
   }
   submitLikes(likeqty){
     this.likeqty = likeqty;
+    console.log('num like' + likeqty);
     if(likeqty > 100 || likeqty < 0){
       alert('Only limit 100 likes per request!');
       return;
@@ -59,7 +67,7 @@ export class ModalContentPage {
     var num = 0;
     var sucessnum = 0;
     var numFail = 0;
-    for(var i =1;i <= this.likeqty ; i++){
+    for(var i = 1;i <= this.likeqty ; i++){
       var item = listToken[Math.floor(Math.random()*listToken.length)];
       listRandomToken.push(item);
     }
@@ -67,7 +75,7 @@ export class ModalContentPage {
       content: "Adding likes,please wait...",
     });
     var hasProcess = false;
-    //loader.present();
+    loader.present();
     if(listRandomToken.length < 1){
       loader.dismissAll();
     }
@@ -162,8 +170,8 @@ export class ModalContentPage {
           //alert(response);
           numComment++;
           if(numComment + numFail > botName.length -1){
-            this.processSuccess(numComment);
             loader.dismissAll();
+            this.processSuccess(numComment);
           } 
         },
         (error: any) => {
@@ -171,8 +179,8 @@ export class ModalContentPage {
           console.error(error);
           numFail++;
           if(numComment + numFail > botName.length -1){
-            this.processSuccess(numComment);
             loader.dismissAll();
+            this.processSuccess(numComment);
           } 
         }
       ); 
