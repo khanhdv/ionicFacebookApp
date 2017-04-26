@@ -75,7 +75,7 @@
 </ion-item>
 <div *ngIf="type == 'COMMENT'">
 <ion-item>
-  <textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content" style="height: 100%;width: 100%;"></textarea>
+  <ion-textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content" style="height: 100%;width: 100%;"></ion-textarea>
   </ion-item>
   <div>
   <button ion-button round (click)="submitComment(botName)" style="width: 100%">COMMENT!</button>
