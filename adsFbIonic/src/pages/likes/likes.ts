@@ -41,7 +41,7 @@ export class LikesPage implements OnInit{
   currentId = "";
   postsById = "";
   envAvai = false;
-  postList = "";
+  postList: any;
   shouldShowCancel : true;
   cordova: any;
   ngOnInit() {
@@ -100,6 +100,16 @@ export class LikesPage implements OnInit{
   }
   handlerSearchResponse(jsonData): void{
       this.postList = jsonData;
+      if(this.postList.length > 0){
+        for(var key in this.postList){
+          if(this.postList[key].from.id){
+            this.currentId = this.postList[key].from.id;
+            break;
+          }
+          break;
+        }
+
+      }
       console.log(this.postList);
   }
   closeKeyboard(){
