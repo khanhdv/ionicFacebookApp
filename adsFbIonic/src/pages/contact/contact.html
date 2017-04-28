@@ -52,7 +52,7 @@
 <ion-content>
   <div [ngSwitch]="pet">
     <ion-list *ngSwitchCase="'puppies'">
-    <h2 style="margin-top:50px;">Thanh toán ngân lượng</h2>
+<!--     <h2 style="margin-top:50px;">Thanh toán ngân lượng</h2>
     <img src="https://fpt.vn/images/post/nganluong-logo.jpg">
     <ion-item>
     <ion-label>Carrier name</ion-label>
@@ -68,18 +68,18 @@
    <ion-item>
    <ion-input type="number" placeholder="Card number" [value]="cardnum" [(ngModel)]="cardnum" inputmode="numeric" pattern="[0-9]*"></ion-input>
    </ion-item>
-   <button ion-button round (click)="sendCardNum()">Send</button>
+   <button ion-button round (click)="sendCardNum()">Send</button> -->
     </ion-list>
 
     <ion-list *ngSwitchCase="'kittens'">
     </ion-list>
 
     <ion-list *ngSwitchCase="'ducklings'">
-    <h2 style="margin-top:50px;">Hãy nhập code miễn phí để kéo dài thời hạn sử dụng</h2>
+<!--     <h2 style="margin-top:50px;">Hãy nhập code miễn phí để kéo dài thời hạn sử dụng</h2>
     <ion-item>
       <ion-input type="number" placeholder="Code khuyen mai" [value]="freecode" [(ngModel)]="freecode" inputmode="numeric" pattern="[0-9]*"></ion-input>
     </ion-item>
-     <button ion-button round (click)="sendFreeCode()">Send Code</button>
+     <button ion-button round (click)="sendFreeCode()">Send Code</button> -->
     </ion-list>
   </div>
 </ion-content>

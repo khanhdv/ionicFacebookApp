@@ -52,7 +52,7 @@
   </ion-row>
 </ion-card>
 <ion-item *ngIf="type == 'LIKE'">
-    <ion-label color="primary" stacked>Number of likes to boost this post</ion-label>
+    <ion-label color="primary" stacked>Ấn vào đây để chọn số like</ion-label>
 <!--     <ion-input type="number" placeholder="Number Likes you wanna" [value]="likeqty" [(ngModel)]="likeqty" inputmode="numeric" pattern="[0-9]*"></ion-input> -->
     <ion-select [(ngModel)]="likeqty">
       <ion-option *ngFor="let item of liketnumlist" [value] = "item.value">{{item.value}}</ion-option>
@@ -66,7 +66,7 @@
 </div>
 
 <ion-item *ngIf="type == 'COMMENT'">
-  <ion-label>BOT name</ion-label>
+  <ion-label>Chọn bot để comment</ion-label>
   <ion-select [(ngModel)]="botName" multiple="true" (change)="onChange(value)">
     <ion-option *ngFor="let data of listBotCommentToken" [value]="data.token">
     <p>{{data.name}}<p>
@@ -75,7 +75,7 @@
 </ion-item>
 <div *ngIf="type == 'COMMENT'">
 <ion-item>
-  <ion-textarea [(ngModel)]="commentContent" name="comment content" placeholder="comment content" style="height: 100%;width: 100%;"></ion-textarea>
+  <ion-textarea [(ngModel)]="commentContent" name="comment content" placeholder="Nội dung comment" style="height: 100%;width: 100%;"></ion-textarea>
   </ion-item>
   <div>
   <button ion-button round (click)="submitComment(botName)" style="width: 100%">COMMENT!</button>
